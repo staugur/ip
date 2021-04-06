@@ -25,4 +25,4 @@ dev:
 	@go run ./
 
 release: build
-	cd bin/ && tar zcvf $(BINARY).$(Version)-linux-amd64.tar.gz $(BINARY) ../data && rm $(BINARY)
+	mv bin/$(BINARY) . && tar zcvf bin/$(BINARY).$(Version)-linux-amd64.tar.gz $(BINARY) data && rm $(BINARY)

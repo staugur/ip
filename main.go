@@ -61,10 +61,11 @@ func startServer() {
 	if os.Getenv("ip_use") == "memory" {
 		btree = false
 	}
-	if host == "" {
-		host = os.Getenv("ip_host")
-	}
+	envhost := os.Getenv("ip_host")
 	envport := os.Getenv("ip_port")
+	if envhost != "" {
+		host = envhost
+	}
 	if envport != "" {
 		envport, err := strconv.Atoi(envport)
 		if err != nil {
