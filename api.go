@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"ip/ip2region"
+	"ip/third_party/ip2region"
 	"net"
 	"net/http"
 	"strings"
@@ -125,6 +125,7 @@ func apiErrView(w http.ResponseWriter, err error) {
 
 func restView(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	ip := getIP(r)
 	i, err := search(ip)
 	if err != nil {
