@@ -1,21 +1,20 @@
-# -- build dependencies with alpine --
-FROM golang:alpine AS builder
+ARG buildos=golang:1.17.0-alpine
+ARG runos=scratch
 
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64 \
-    ip_host=0.0.0.0
+# -- build dependencies with alpine --
+FROM $buildos AS builder
 
 WORKDIR /build
 
 COPY . .
 
+ARG TARGETARCH
+
 RUN go env -w GOPROXY=https://goproxy.cn,direct && \
-    go build -ldflags "-s -w" -o ip .
+    CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -ldflags "-s -w" .
 
 # run application with a small image
-FROM scratch
+FROM $runos
 
 COPY --from=builder /build/ip /bin/
 
