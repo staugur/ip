@@ -10,7 +10,7 @@ the help option is `ip -h/--help`.
 
 ### binary
 
-go to [releases](releases) and download package, run it.
+go to [releases](https://github.com/staugur/ip/releases) and download package, run it.
 
 ### docker
 
@@ -19,8 +19,6 @@ $ docker run -d --name ip --net=host staugur/ip
 ```
 
 ### API
-
-默认使用根为前缀，可以定义为其他（启动时使用prefix选项），比如 /v1
 
 The default use `/` is the prefix,
 and it can be defined as other(`prefix` option is used at startup),
