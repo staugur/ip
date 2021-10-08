@@ -10,7 +10,7 @@ the help option is `ip -h/--help`.
 
 ### binary
 
-go to [releases](https://github.com/staugur/ip/releases) and download package, run it.
+Go to [releases](https://github.com/staugur/ip/releases) and download package, run it.
 
 ### docker
 

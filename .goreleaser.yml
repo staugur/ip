@@ -1,0 +1,34 @@
+project_name: ip
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+archives:
+  - replacements:
+      darwin: darwin
+      linux: linux
+      386: i386
+      amd64: amd64
+    name_template: "{{ .Binary }}.{{ .Version }}-{{ .Os }}-{{ .Arch }}"
+    files:
+      - NOTICE
+      - LICENSE
+      - README*
+      - data
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - 'README*.md'
+      - '.github'
