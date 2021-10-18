@@ -26,7 +26,7 @@ import (
 	"strings"
 )
 
-const version = "0.1.3"
+const version = "0.1.4"
 
 var (
 	v bool
@@ -61,10 +61,7 @@ func main() {
 }
 
 func routePattern(pattern string) string {
-	if strings.HasSuffix(prefix, "/") {
-		prefix = strings.TrimSuffix(prefix, "/")
-	}
-	return prefix + pattern
+	return strings.TrimSuffix(prefix, "/") + pattern
 }
 
 func startServer() {
@@ -85,7 +82,7 @@ func startServer() {
 	if envport != "" {
 		envport, err := strconv.Atoi(envport)
 		if err != nil {
-			fmt.Println("Invalid environment shorturl_port")
+			fmt.Println("Invalid environment ip_port")
 			return
 		}
 		port = uint(envport)

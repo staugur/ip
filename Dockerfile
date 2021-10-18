@@ -12,7 +12,7 @@ COPY . .
 
 ARG goproxy
 
-ARG TARGETARCH=amd64
+ARG TARGETARCH
 
 RUN if [ "x$goproxy" != "x" ]; then go env -w GOPROXY=${goproxy},direct; fi ; \
     CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -ldflags "-s -w" .
