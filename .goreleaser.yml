@@ -1,4 +1,4 @@
-project_name: ip
+project_name: mip
 before:
   hooks:
     - go mod tidy
@@ -8,6 +8,12 @@ builds:
     goos:
       - linux
       - darwin
+      - windows
+    ignore:
+      - goos: windows
+        goarch: 386
+      - goos: windows
+        goarch: arm64
 archives:
   - replacements:
       darwin: darwin

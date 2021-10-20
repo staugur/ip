@@ -5,8 +5,8 @@ My IP Service
 ### Deploy
 
 A web app, the default listen address: `0.0.0.0:7000`,
-the generated executable file name is `ip`,
-the help option is `ip -h/--help`.
+the generated executable file name is `mip`,
+the help option is `mip -h/--help`.
 
 ### binary
 

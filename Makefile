@@ -1,6 +1,6 @@
 .PHONY: help
 
-BINARY=ip
+BINARY=mip
 Version=$(shell grep "const version" main.go | tr -d '"' | awk '{print $$NF}')
 
 help:
