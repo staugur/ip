@@ -1,4 +1,4 @@
-ARG buildos=golang:1.17-alpine
+ARG buildos=golang:1.23-alpine
 ARG runos=scratch
 
 # -- build dependencies with alpine --
@@ -13,6 +13,6 @@ RUN if [ "x$goproxy" != "x" ]; then go env -w GOPROXY=${goproxy},direct; fi ; \
 # -- run application with a small image --
 FROM $runos
 COPY --from=builder /build/mip /bin/
-COPY data/ip2region.db /
+COPY data/ip2region.xdb /
 EXPOSE 7000
-ENTRYPOINT ["mip", "-db", "/ip2region.db"]
+ENTRYPOINT ["mip", "-db", "/ip2region.xdb"]

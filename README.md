@@ -1,12 +1,26 @@
 ## ip
 
-My IP Service
+My IP Service: the IP address database is derived from [lionsoul/ip2region](https://github.com/lionsoul/ip2region),
+and is for reference only!
 
 ### Deploy
 
 A web app, the default listen address: `0.0.0.0:7000`,
 the generated executable file name is `mip`,
-the help option is `mip -h/--help`.
+the help option is `mip -h/--help`:
+```bash
+$ ./mip -h
+Usage of mip:
+  -db string
+        the ip2region.xdb filepath (default "data/ip2region.xdb")
+  -host string
+        http listen host (default "0.0.0.0")
+  -port uint
+        http listen port (default 7000)
+  -prefix string
+        route prefix
+  -v    show version and exit
+```
 
 ### binary
 

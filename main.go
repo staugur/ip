@@ -24,9 +24,11 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"mip/third_party/xdb"
 )
 
-const version = "0.2.0"
+const version = "0.3.0"
 
 var (
 	v bool
@@ -34,21 +36,25 @@ var (
 	host   string
 	port   uint
 	prefix string
-	db     string
-	btree  bool
+	dbpath string
+
+	vIndex []byte
 )
 
 func init() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-
 	flag.BoolVar(&v, "v", false, "show version and exit")
-
 	flag.StringVar(&host, "host", "0.0.0.0", "http listen host")
 	flag.UintVar(&port, "port", 7000, "http listen port")
-
 	flag.StringVar(&prefix, "prefix", "", "route prefix")
-	flag.StringVar(&db, "db", "data/ip2region.db", "the ip2region.db filepath")
-	flag.BoolVar(&btree, "btree", true, "use b-tree algorithm(if no, use memory)")
+	flag.StringVar(&dbpath, "db", "data/ip2region.xdb", "the ip2region.xdb filepath")
+
+	// 从 dbpath 加载 VectorIndex 缓存，把下述 vIndex 变量全局到内存里面。
+	var err error
+	vIndex, err = xdb.LoadVectorIndexFromFile(dbpath)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func main() {
@@ -65,14 +71,11 @@ func routePattern(pattern string) string {
 }
 
 func startServer() {
-	if db == "" {
-		db = os.Getenv("ip_db")
+	if dbpath == "" {
+		dbpath = os.Getenv("ip_db")
 	}
 	if prefix == "" {
 		prefix = os.Getenv("ip_prefix")
-	}
-	if os.Getenv("ip_use") == "memory" {
-		btree = false
 	}
 	envhost := os.Getenv("ip_host")
 	envport := os.Getenv("ip_port")
@@ -87,7 +90,7 @@ func startServer() {
 		}
 		port = uint(envport)
 	}
-	if stat, err := os.Stat(db); err != nil || stat.IsDir() {
+	if stat, err := os.Stat(dbpath); err != nil || stat.IsDir() {
 		fmt.Println("invalid db")
 		return
 	}
